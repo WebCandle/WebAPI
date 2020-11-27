@@ -6,11 +6,13 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using WebAPI.Models;
 
 namespace WebAPI
 {
     public class WebApiApplication : System.Web.HttpApplication
     {
+        public static List<Chat> Chats = new List<Chat>();
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();

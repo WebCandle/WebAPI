@@ -23,9 +23,9 @@ namespace WebAPI.Controllers
         }
 
         // POST: api/Chat
-        public void Post([FromBody]string value)
+        public void Post([FromBody]Message value)
         {
-
+            
         }
 
         // PUT: api/Chat/5

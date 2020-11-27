@@ -7,10 +7,10 @@ namespace WebAPI.Models
 {
     public class Message
     {
-        private long _MessageID;
-        private string _Text;
-        private List<Photo> _Photos;
-        private DateTime _Time;
-        private User _Sender;
+        public long MessageID { set; get; }
+        public string Text { set; get; }
+        public List<Photo> Photos { set; get; }
+        public DateTime Time { set; get; }
+        public User Sender { set; get; }
     }
 }

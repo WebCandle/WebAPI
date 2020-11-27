@@ -7,7 +7,7 @@ namespace WebAPI.Models
 {
     public class User
     {
-        private long _UserID;
-        private string _Name;
+        public long UserID { set; get; }
+        public string Name { set; get; }
     }
 }
