@@ -23,9 +23,13 @@ namespace WebAPI.Controllers
         }
 
         // POST: api/Chat
-        public void Post([FromBody]Message value)
+        public void Post(long id, [FromBody]Message value)
         {
-            
+            Chat chat = WebApiApplication.Chats.Where(x => x.ChatID = id);
+            if(chat != null)
+            {
+                chat.AddMessage(value);
+            }
         }
 
         // PUT: api/Chat/5

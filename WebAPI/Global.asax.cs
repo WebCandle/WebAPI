@@ -10,9 +10,13 @@ using WebAPI.Models;
 
 namespace WebAPI
 {
-    public class WebApiApplication : System.Web.HttpApplication
+    public class Global : System.Web.HttpApplication
     {
-        public static List<Chat> Chats = new List<Chat>();
+        public Controller Controller { get; set; }
+        public Global()
+        {
+            Controller = new Controller();
+        }
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();

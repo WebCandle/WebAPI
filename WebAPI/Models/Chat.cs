@@ -23,7 +23,15 @@ namespace WebAPI.Models
             ChatID = 0;
             RoomName = "<RoomName>";
             Messages = new List<Message>();
+            //WebApiApplication
         }
+
+        #region Worker
+        public void AddMessage(Message message)
+        {
+            Messages.Add(message);
+        }
+        #endregion
 
     }
 }
