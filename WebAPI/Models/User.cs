@@ -5,7 +5,6 @@ using System.Web;
 
 namespace WebAPI.Models
 {
-    [Serializable]
     public class User
     {
         private long _UserID;

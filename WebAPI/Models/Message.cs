@@ -5,7 +5,6 @@ using System.Web;
 
 namespace WebAPI.Models
 {
-    [Serializable]
     public class Message
     {
         private long _MessageID;

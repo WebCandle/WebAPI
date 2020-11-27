@@ -1,5 +1,6 @@
 #Visual Studio
 .vs/
+packages/
 
 # Build results
 **/[Bb]in/

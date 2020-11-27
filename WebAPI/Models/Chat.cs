@@ -5,11 +5,25 @@ using System.Web;
 
 namespace WebAPI.Models
 {
-    [Serializable]
     public class Chat
     {
-        private long _ChatID;
-        private string _RoomName;
-        private List<Message> _Messages;
+        public long ChatID { set; get; }
+        public string RoomName { set; get; }
+        public List<Message> Messages { set; get; }
+
+        public Chat()
+        {
+            ChatID = 0;
+            RoomName = "<RoomName>";
+            Messages = new List<Message>();
+        }
+        public Chat( long chatID)
+        {
+            //get Chat from the DB
+            ChatID = 0;
+            RoomName = "<RoomName>";
+            Messages = new List<Message>();
+        }
+
     }
 }
