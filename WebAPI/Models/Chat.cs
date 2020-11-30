@@ -17,16 +17,35 @@ namespace WebAPI.Models
             RoomName = "<RoomName>";
             Messages = new List<Message>();
         }
+        public Chat(long chatID,string roomName, List<Message> messages)
+        {
+            ChatID = chatID;
+            RoomName = roomName;
+            Messages = messages;
+        }
         public Chat( long chatID)
         {
-            //get Chat from the DB
-            ChatID = 0;
-            RoomName = "<RoomName>";
-            Messages = new List<Message>();
-            //WebApiApplication
+            //get Chat from the DB or datasource
+            Chat chat = Global.MainController.Chats.Find(x => x.ChatID == chatID);
+            if(chat != null)
+            {
+                Assign(chat);
+            }
+            else
+            {
+                ChatID = 0;
+                RoomName = "<RoomName>";
+                Messages = new List<Message>();
+            }
         }
 
         #region Worker
+        public void Assign(Chat chat)
+        {
+            ChatID = chat.ChatID;
+            RoomName = chat.RoomName;
+            Messages = chat.Messages;
+        }
         public void AddMessage(Message message)
         {
             Messages.Add(message);

@@ -7,15 +7,16 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using WebAPI.Models;
+using WebAPI.Controllers;
 
 namespace WebAPI
 {
     public class Global : System.Web.HttpApplication
     {
-        public Controller Controller { get; set; }
+        public static MainController MainController { get; set; }
         public Global()
         {
-            Controller = new Controller();
+            MainController = new MainController();
         }
         protected void Application_Start()
         {

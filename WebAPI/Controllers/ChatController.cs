@@ -10,36 +10,40 @@ namespace WebAPI.Controllers
 {
     public class ChatController : ApiController
     {
-        // GET: api/Chat
-        public Chat Get()
-        {
-            return new Chat();
-        }
+        //// GET: api/Chat
+        //public Chat Get()
+        //{
+        //    return new Chat();
+        //}
 
         // GET: api/Chat/5
-        public Chat Get(long id)
+        public Chat Get(long chatID)
         {
-            return new Chat(id);
-        }
-
-        // POST: api/Chat
-        public void Post(long id, [FromBody]Message value)
-        {
-            Chat chat = WebApiApplication.Chats.Where(x => x.ChatID = id);
-            if(chat != null)
+            Chat chat = Global.MainController.Chats.Find(x => x.ChatID == chatID);
+            if (chat != null)
             {
-                chat.AddMessage(value);
+                return chat;
+            }
+            else
+            {
+                return new Chat();
             }
         }
 
-        // PUT: api/Chat/5
-        public void Put(int id, [FromBody]string value)
+        // POST: api/Chat
+        public void Post([FromBody]Chat chat)
         {
+
         }
 
-        // DELETE: api/Chat/5
-        public void Delete(int id)
-        {
-        }
+        //// PUT: api/Chat/5
+        //public void Put(int id, [FromBody]string value)
+        //{
+        //}
+
+        //// DELETE: api/Chat/5
+        //public void Delete(int id)
+        //{
+        //}
     }
 }
