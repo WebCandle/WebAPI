@@ -23,12 +23,14 @@ namespace WebAPI.Controllers
         //}
 
         // POST: api/Message/chatID
-        public void Post(long chatID, [FromBody]Message msg)
+        [HttpPost]
+        [Route("api/Message/{chatID:long}")]
+        public void Post([FromUri] long chatID,[FromBody]string msg)
         {
             Chat chat = Global.MainController.Chats.Find(x => x.ChatID == chatID);
             if (chat != null)
             {
-                chat.AddMessage(msg);
+                //chat.AddMessage(msg);
             }
         }
 

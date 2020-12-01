@@ -2,7 +2,7 @@
     <h1>Chats</h1>
     @foreach (var chat in Global.MainController.Chats)
     {
-    <p><a href="~/View/ChatView.aspx?id=@chat.ChatID" class="btn btn-primary btn-lg">@chat.RoomName</a></p>
+    <p><a href="~/ChatView.aspx?id=@chat.ChatID" class="btn btn-primary btn-lg">@chat.RoomName</a></p>
     }
 
 </div>

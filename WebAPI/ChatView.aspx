@@ -11,12 +11,13 @@
     <form id="form1" runat="server">
         <div>
             <div><asp:Label ID="lblChatRoom" runat="server"></asp:Label></div>
-            <asp:UpdatePanel ID="UPnl" runat="server">
-                <ContentTemplate>
-                    <div id="MyChat"></div>
-                </ContentTemplate>
-            </asp:UpdatePanel>
-            <asp:Timer ID="Tmr" runat="server" Interval="1000" OnTick="Tmr_Tick"></asp:Timer>
+                   <asp:GridView ID="GWChat" runat="server">
+                        
+                    </asp:GridView>
+            <div>
+                <asp:TextBox ID="TxtMessage" runat="server" Rows="4" TextMode="MultiLine"></asp:TextBox>
+                <asp:Button ID="BtnSend" OnClick="BtnSend_Click" runat="server" Text="Send" CssClass="btn btn-primary" />
+            </div>
         </div>
     </form>
 </body>

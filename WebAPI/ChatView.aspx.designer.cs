@@ -31,21 +31,30 @@ namespace WebAPI.Views {
         protected global::System.Web.UI.WebControls.Label lblChatRoom;
         
         /// <summary>
-        /// UPnl-Steuerelement
+        /// GWChat-Steuerelement
         /// </summary>
         /// <remarks>
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel UPnl;
+        protected global::System.Web.UI.WebControls.GridView GWChat;
         
         /// <summary>
-        /// Tmr-Steuerelement
+        /// TxtMessage-Steuerelement
         /// </summary>
         /// <remarks>
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected global::System.Web.UI.Timer Tmr;
+        protected global::System.Web.UI.WebControls.TextBox TxtMessage;
+        
+        /// <summary>
+        /// BtnSend-Steuerelement
+        /// </summary>
+        /// <remarks>
+        /// Automatisch generiertes Feld
+        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button BtnSend;
     }
 }

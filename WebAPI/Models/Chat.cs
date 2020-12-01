@@ -48,7 +48,18 @@ namespace WebAPI.Models
         }
         public void AddMessage(Message message)
         {
+            message.MessageID = getNeuMessageId();
             Messages.Add(message);
+        }
+        private long getNeuMessageId()
+        {
+            Message lastMessage = Messages.OrderByDescending(item => item.MessageID).FirstOrDefault();
+            long messageId = 1;
+            if (lastMessage != null)
+            {
+                messageId = lastMessage.MessageID + 1;
+            }
+            return messageId;
         }
         #endregion
 

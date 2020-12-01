@@ -25,6 +25,8 @@ namespace WebAPI.Views
             }
             Chat = new Chat(ChatID);
             lblChatRoom.Text = Chat.RoomName;
+            GWChat.DataSource = Chat.Messages;
+            GWChat.DataBind();
         }
 
         protected void Tmr_Tick(object sender, EventArgs e)
@@ -33,6 +35,13 @@ namespace WebAPI.Views
             {
 
             }
+        }
+
+        protected void BtnSend_Click(object sender, EventArgs e)
+        {
+            string endpoint = HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority);
+            long senderid = 1;
+            Global.MainController.PostMessage(endpoint, ChatID, TxtMessage.Text, senderid);
         }
     }
 }
