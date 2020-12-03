@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Net.Http;
 using Newtonsoft.Json;
+using System.Threading;
 using WebAPI.Models;
 
 namespace WebAPI.Views
@@ -24,10 +25,6 @@ namespace WebAPI.Views
             {
                 ChatID = 1;
             }
-            if(!Page.IsPostBack)
-            {
-                loadChat();
-            }
         }
 
         protected void BtnSend_Click(object sender, EventArgs e)
@@ -37,8 +34,13 @@ namespace WebAPI.Views
             long messageid = 55;
             Message message = new Message(messageid, TxtMessage.Text, DateTime.Now, senderid);
             HttpClient httpClient = new HttpClient();
-            HttpResponseMessage response = httpClient.PostAsXmlAsync(endpoint+"/api/message/"+ChatID.ToString(), message).Result;
-            if(response.IsSuccessStatusCode)
+            var task = httpClient.PostAsXmlAsync(endpoint+"/api/message/"+ChatID.ToString(), message);
+            while(!task.IsCompleted)
+            {
+                Thread.Sleep(5);
+            }
+            HttpResponseMessage response = task.Result;
+            if (response.IsSuccessStatusCode)
             {
                 Response.Redirect(Request.RawUrl, true);
             }
@@ -47,7 +49,12 @@ namespace WebAPI.Views
         {
             string endpoint = HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority);
             HttpClient httpClient = new HttpClient();
-            HttpResponseMessage response = httpClient.GetAsync(endpoint + "/api/chat/" + ChatID.ToString()).Result;
+            var task = httpClient.GetAsync(endpoint + "/api/chat/" + ChatID.ToString());
+            while(!task.IsCompleted)
+            {
+                Thread.Sleep(5);
+            }
+            HttpResponseMessage response = task.Result;
             if (response.IsSuccessStatusCode)
             {
                 try
@@ -63,10 +70,6 @@ namespace WebAPI.Views
                     lblChatRoom.Text = ex.Message;
                 }
             }
-        }
-        protected void timerChat_Tick(object sender, EventArgs e)
-        {
-            //GWChat.DataBind();
         }
 
         protected void btnLoadChat_Click(object sender, EventArgs e)

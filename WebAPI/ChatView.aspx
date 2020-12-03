@@ -9,21 +9,9 @@
 </head>
 <body>
     <form id="form1" runat="server">
-        <asp:ScriptManager ID="sm" runat="server"></asp:ScriptManager>
-        
-        <div>
-            <div>
-            <asp:Label ID="lblChatRoom" runat="server"></asp:Label></div>
-            <asp:Timer ID="timerChat" runat="server" OnTick="timerChat_Tick" Interval="50000" />
-            <asp:UpdatePanel ID="udtPnl" runat="server">
-                <ContentTemplate>
-                    <asp:GridView ID="GWChat" runat="server">
-                    </asp:GridView>
-                </ContentTemplate>
-                <Triggers>
-                    <asp:AsyncPostBackTrigger ControlID="timerChat" EventName="Tick" />
-                </Triggers>
-            </asp:UpdatePanel>
+        <div>         
+            <div><asp:Label ID="lblChatRoom" runat="server"></asp:Label></div>
+            <div><asp:GridView ID="GWChat" runat="server"></asp:GridView></div>
             <div>
                 <asp:TextBox ID="TxtMessage" runat="server" Rows="4" TextMode="MultiLine"></asp:TextBox>
                 <asp:Button ID="BtnSend" OnClick="BtnSend_Click" runat="server" Text="Send" CssClass="btn btn-primary" />
