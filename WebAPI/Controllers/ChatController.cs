@@ -17,9 +17,10 @@ namespace WebAPI.Controllers
         //}
 
         // GET: api/Chat/5
-        public Chat Get(long chatID)
+        [HttpGet, Route("api/chat/{id:long}")]
+        public Chat Get(long id)
         {
-            Chat chat = Global.MainController.Chats.Find(x => x.ChatID == chatID);
+            Chat chat = Global.MainController.Chats.Find(x => x.ChatID == id);
             if (chat != null)
             {
                 return chat;
@@ -36,14 +37,14 @@ namespace WebAPI.Controllers
 
         }
 
-        //// PUT: api/Chat/5
-        //public void Put(int id, [FromBody]string value)
-        //{
-        //}
+        // PUT: api/Chat/5
+        public void Put(int id, [FromBody]string value)
+        {
+        }
 
-        //// DELETE: api/Chat/5
-        //public void Delete(int id)
-        //{
-        //}
+        // DELETE: api/Chat/5
+        public void Delete(int id)
+        {
+        }
     }
 }

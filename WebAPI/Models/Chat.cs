@@ -14,7 +14,7 @@ namespace WebAPI.Models
         public Chat()
         {
             ChatID = 0;
-            RoomName = "<RoomName>";
+            RoomName = "[empty chat]";
             Messages = new List<Message>();
         }
         public Chat(long chatID,string roomName, List<Message> messages)

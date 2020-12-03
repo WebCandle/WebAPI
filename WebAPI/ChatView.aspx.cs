@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Net.Http;
+using Newtonsoft.Json;
 using WebAPI.Models;
 
 namespace WebAPI.Views
@@ -12,7 +13,6 @@ namespace WebAPI.Views
     public partial class ChatView : System.Web.UI.Page
     {
         public long ChatID { get; set; }
-        public Chat Chat { get; set; }
         protected void Page_Load(object sender, EventArgs e)
         {
             string id = Request.QueryString["id"];
@@ -22,27 +22,11 @@ namespace WebAPI.Views
             }
             else
             {
-                ChatID = 0;
+                ChatID = 1;
             }
-            Chat chat = Global.MainController.Chats.Find(x => x.ChatID == ChatID);
-            if(chat != null)
+            if(!Page.IsPostBack)
             {
-                lblChatRoom.Text = chat.RoomName;
-                GWChat.DataSource = chat.Messages;
-                GWChat.DataBind();
-            }
-            else
-            {
-                lblChatRoom.Text = "Not Fround!!!!!";
-            }
-
-        }
-
-        protected void Tmr_Tick(object sender, EventArgs e)
-        {
-            foreach(Message message in Chat.Messages)
-            {
-
+                loadChat();
             }
         }
 
@@ -58,6 +42,36 @@ namespace WebAPI.Views
             {
                 Response.Redirect(Request.RawUrl, true);
             }
+        }
+        public void loadChat()
+        {
+            string endpoint = HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority);
+            HttpClient httpClient = new HttpClient();
+            HttpResponseMessage response = httpClient.GetAsync(endpoint + "/api/chat/" + ChatID.ToString()).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                try
+                {
+                    string result = response.Content.ReadAsStringAsync().Result;
+                    Chat chat = JsonConvert.DeserializeObject<Chat>(result);
+                    lblChatRoom.Text = chat.RoomName;
+                    GWChat.DataSource = chat.Messages;
+                    GWChat.DataBind();
+                }
+                catch(Exception ex)
+                {
+                    lblChatRoom.Text = ex.Message;
+                }
+            }
+        }
+        protected void timerChat_Tick(object sender, EventArgs e)
+        {
+            //GWChat.DataBind();
+        }
+
+        protected void btnLoadChat_Click(object sender, EventArgs e)
+        {
+            loadChat();
         }
     }
 }
