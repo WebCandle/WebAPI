@@ -10,38 +10,41 @@ namespace WebAPI.Controllers
 {
     public class MessageController : ApiController
     {
-        // GET: api/Message
-        public IEnumerable<string> Get()
+        // GET: api/Message/{id:chat_id}
+        [HttpGet]
+        [Route("api/Message/{chatID:long}")]
+        public List<Message> Get([FromUri]long chatID)
         {
-            return new string[] { "value1", "value2" };
+            Chat chat = Global.MainController.Chats.Find(x => x.ChatID == chatID);
+            if(chat != null)
+            {
+                return chat.Messages;
+            }
+            return null;
         }
-
-        //// GET: api/Message/5
-        //public string Get(int id)
-        //{
-        //    return "value";
-        //}
 
         // POST: api/Message/chatID
         [HttpPost]
         [Route("api/Message/{chatID:long}")]
-        public void Post([FromUri] long chatID,[FromBody]string msg)
+        public HttpResponseMessage Post([FromUri] long chatID,[FromBody]Message msg)
         {
-            Chat chat = Global.MainController.Chats.Find(x => x.ChatID == chatID);
-            if (chat != null)
+            if( msg != null)
             {
-                //chat.AddMessage(msg);
+                Global.MainController.AddMessage(chatID, msg);
+                return new HttpResponseMessage(HttpStatusCode.OK);
             }
+            return new HttpResponseMessage(HttpStatusCode.InternalServerError);
         }
 
-        // PUT: api/Message/5
-        public void Put(int id, [FromBody]string value)
-        {
-        }
+        //// PUT: api/Message/5
+        //public void Put(int id, [FromBody]Message msg)
+        //{
+        //}
 
-        // DELETE: api/Message/5
-        public void Delete(int id)
-        {
-        }
+        //// DELETE: api/Message/5
+        //public HttpResponseMessage Delete(int id)
+        //{
+        //    return new HttpResponseMessage(HttpStatusCode.OK);
+        //}
     }
 }

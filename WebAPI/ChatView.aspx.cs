@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Net.Http;
 using WebAPI.Models;
 
 namespace WebAPI.Views
@@ -23,10 +24,18 @@ namespace WebAPI.Views
             {
                 ChatID = 0;
             }
-            Chat = new Chat(ChatID);
-            lblChatRoom.Text = Chat.RoomName;
-            GWChat.DataSource = Chat.Messages;
-            GWChat.DataBind();
+            Chat chat = Global.MainController.Chats.Find(x => x.ChatID == ChatID);
+            if(chat != null)
+            {
+                lblChatRoom.Text = chat.RoomName;
+                GWChat.DataSource = chat.Messages;
+                GWChat.DataBind();
+            }
+            else
+            {
+                lblChatRoom.Text = "Not Fround!!!!!";
+            }
+
         }
 
         protected void Tmr_Tick(object sender, EventArgs e)
@@ -41,7 +50,14 @@ namespace WebAPI.Views
         {
             string endpoint = HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority);
             long senderid = 1;
-            Global.MainController.PostMessage(endpoint, ChatID, TxtMessage.Text, senderid);
+            long messageid = 55;
+            Message message = new Message(messageid, TxtMessage.Text, DateTime.Now, senderid);
+            HttpClient httpClient = new HttpClient();
+            HttpResponseMessage response = httpClient.PostAsXmlAsync(endpoint+"/api/message/"+ChatID.ToString(), message).Result;
+            if(response.IsSuccessStatusCode)
+            {
+                Response.Redirect(Request.RawUrl, true);
+            }
         }
     }
 }

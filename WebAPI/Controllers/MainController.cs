@@ -31,51 +31,12 @@ namespace WebAPI.Controllers
         {
             Chats.Add(chat);
         }
-        public void PostMessage(string endpoint, long chatId, string messageText,long senderid)
+        public void AddMessage(long ChatID, Message message)
         {
-            
-            Message message = new Message(messageText, senderid);
-            string requestXML = MessageToXMLString(message);
-            string destinationUrl = endpoint + "/api/Message/" + chatId.ToString();
-            string result = postXMLData(destinationUrl, requestXML);
-        }
-        public string postXMLData(string destinationUrl, string requestXml)
-        {
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(destinationUrl);
-            byte[] bytes;
-            bytes = System.Text.Encoding.ASCII.GetBytes(requestXml);
-            request.ContentType = "text/xml; encoding='utf-8'";
-            request.ContentLength = bytes.Length;
-            request.Method = "POST";
-            Stream requestStream = request.GetRequestStream();
-            requestStream.Write(bytes, 0, bytes.Length);
-            requestStream.Close();
-            HttpWebResponse response;
-            response = (HttpWebResponse)request.GetResponse();
-            if (response.StatusCode == HttpStatusCode.OK)
+            Chat chat = Chats.Find(x => x.ChatID == ChatID);
+            if(chat != null)
             {
-                Stream responseStream = response.GetResponseStream();
-                string responseStr = new StreamReader(responseStream).ReadToEnd();
-                return responseStr;
-            }
-            return null;
-        }
-        public string MessageToXMLString(Message message)
-        {
-            using (var stringwriter = new System.IO.StringWriter())
-            {
-                var serializer = new XmlSerializer(typeof(Message));
-                serializer.Serialize(stringwriter, message);
-                return stringwriter.ToString();
-            }
-        }
-
-        public static Message MessageFromXMLString(string xmlText)
-        {
-            using (var stringReader = new System.IO.StringReader(xmlText))
-            {
-                var serializer = new XmlSerializer(typeof(Message));
-                return serializer.Deserialize(stringReader) as Message;
+                chat.AddMessage(message);
             }
         }
     }
