@@ -29,47 +29,18 @@ namespace WebAPI.Views
 
         protected void BtnSend_Click(object sender, EventArgs e)
         {
-            string endpoint = HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority);
             long senderid = 1;
             long messageid = 55;
             Message message = new Message(messageid, TxtMessage.Text, DateTime.Now, senderid);
-            HttpClient httpClient = new HttpClient();
-            var task = httpClient.PostAsXmlAsync(endpoint+"/api/message/"+ChatID.ToString(), message);
-            while(!task.IsCompleted)
-            {
-                Thread.Sleep(5);
-            }
-            HttpResponseMessage response = task.Result;
-            if (response.IsSuccessStatusCode)
-            {
-                Response.Redirect(Request.RawUrl, true);
-            }
+            Global.MainController.PostMessage(ChatID, message);
+            //Response.Redirect(Request.RawUrl);
         }
         public void loadChat()
         {
-            string endpoint = HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority);
-            HttpClient httpClient = new HttpClient();
-            var task = httpClient.GetAsync(endpoint + "/api/chat/" + ChatID.ToString());
-            while(!task.IsCompleted)
-            {
-                Thread.Sleep(5);
-            }
-            HttpResponseMessage response = task.Result;
-            if (response.IsSuccessStatusCode)
-            {
-                try
-                {
-                    string result = response.Content.ReadAsStringAsync().Result;
-                    Chat chat = JsonConvert.DeserializeObject<Chat>(result);
-                    lblChatRoom.Text = chat.RoomName;
-                    GWChat.DataSource = chat.Messages;
-                    GWChat.DataBind();
-                }
-                catch(Exception ex)
-                {
-                    lblChatRoom.Text = ex.Message;
-                }
-            }
+            Chat chat = Global.MainController.GetChat(ChatID);
+            lblChatRoom.Text = chat.RoomName;
+            GWChat.DataSource = chat.Messages;
+            GWChat.DataBind();
         }
 
         protected void btnLoadChat_Click(object sender, EventArgs e)

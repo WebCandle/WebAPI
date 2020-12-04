@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using WebAPI.Models;
+using System.Net.Http;
+using System.Threading;
+using Newtonsoft.Json;
 using System.Net;
 using System.IO;
-using System.Xml;
-using System.Xml.Serialization;
 
 namespace WebAPI.Controllers
 {
@@ -38,6 +39,42 @@ namespace WebAPI.Controllers
             {
                 chat.AddMessage(message);
             }
+        }
+        public Chat GetChat(long ChatID)
+        {
+            string endpoint = HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority);
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(endpoint + "/api/chat/" + ChatID.ToString());
+            request.Method = "GET";
+            request.Accept = "application/json";
+            //request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
+
+            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+            using (Stream stream = response.GetResponseStream())
+            using (StreamReader reader = new StreamReader(stream))
+            {
+                string content =  reader.ReadToEnd();
+                Chat chat = JsonConvert.DeserializeObject<Chat>(content);
+                return chat;
+            }
+        }
+        public async void PostMessage(long ChatID, Message message)
+        {
+            string endpoint = HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority);
+            HttpWebRequest request = (HttpWebRequest) HttpWebRequest.Create(endpoint+"/api/message/"+ChatID.ToString());
+            request.Method = "POST";
+            request.ContentType = "Application/Json";
+            string messageAsString = JsonConvert.SerializeObject(message);
+            var response  = request.GetResponse();
+
+            //while (!task.IsCompleted)
+            //{
+            //    Thread.Sleep(5);
+            //}
+            //HttpResponseMessage response = task.Result;
+            //if (response.IsSuccessStatusCode)
+            //{
+            //    //Response.Redirect(Request.RawUrl, true);
+            //}
         }
     }
 }
