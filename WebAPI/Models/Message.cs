@@ -8,13 +8,17 @@ namespace WebAPI.Models
 {
     public class Message
     {
-        public string Endpoint { set; get; }
+        public string From { set; get; }
+        public string To { set; get; }
+        public string Sender { set; get; }
         public string Text { set; get; }
         public DateTime Time { set; get; }
 
-        public Message(string endpoint, string text, DateTime dateTime)
+        public Message(string from, string to, string sender, string text, DateTime dateTime)
         {
-            Endpoint = endpoint;
+            From = from;
+            To = to;
+            Sender = sender;
             Text = text;
             Time = dateTime;
         }

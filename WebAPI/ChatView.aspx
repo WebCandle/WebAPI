@@ -16,7 +16,7 @@
             <div>
                 <asp:UpdatePanel ID="ChatUpdatePanel" runat="server" UpdateMode="Conditional">
                     <ContentTemplate>
-                        <asp:GridView ID="GWChat" runat="server"></asp:GridView>
+                        <asp:Panel ID="Pnl" runat="server"></asp:Panel>
                     </ContentTemplate>
                     <Triggers>
                         <asp:AsyncPostBackTrigger ControlID="ChatTimer" EventName="Tick" />
@@ -25,7 +25,8 @@
             </div>
             <div>
                 <div>
-                    To: <asp:TextBox ID="txtEndpointTo" runat="server"></asp:TextBox>
+                    To: <asp:TextBox ID="txtEndpointTo" runat="server"></asp:TextBox><br />
+                    Sender Name: <asp:TextBox ID="txtSenderName" runat="server"></asp:TextBox>
                 </div>
                 <asp:TextBox ID="TxtMessage" runat="server" Rows="4" TextMode="MultiLine"></asp:TextBox>
                 <asp:Button ID="BtnSend" OnClick="BtnSend_Click" runat="server" Text="Send" CssClass="btn btn-primary" />

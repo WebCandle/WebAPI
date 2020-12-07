@@ -28,7 +28,7 @@ namespace WebAPI.Controllers
         [Route("api/Message")]
         public Message Get()
         {
-            return new Message("endpoint", "messagetext", DateTime.Now);
+            return new Message("from","to","sender", "text", DateTime.Now);
         }
     }
 }

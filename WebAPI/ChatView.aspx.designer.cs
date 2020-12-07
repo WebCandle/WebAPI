@@ -58,13 +58,13 @@ namespace WebAPI {
         protected global::System.Web.UI.UpdatePanel ChatUpdatePanel;
         
         /// <summary>
-        /// GWChat-Steuerelement
+        /// Pnl-Steuerelement
         /// </summary>
         /// <remarks>
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView GWChat;
+        protected global::System.Web.UI.WebControls.Panel Pnl;
         
         /// <summary>
         /// txtEndpointTo-Steuerelement
@@ -74,6 +74,15 @@ namespace WebAPI {
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtEndpointTo;
+        
+        /// <summary>
+        /// txtSenderName-Steuerelement
+        /// </summary>
+        /// <remarks>
+        /// Automatisch generiertes Feld
+        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtSenderName;
         
         /// <summary>
         /// TxtMessage-Steuerelement

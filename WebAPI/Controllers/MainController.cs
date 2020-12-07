@@ -28,34 +28,45 @@ namespace WebAPI.Controllers
         }
         public void AddMessage(Message message)
         {
-            Chat chat = Chats.Find(x => x.Endpoint == message.Endpoint);
+            Chat chat = Chats.Find(x => x.Endpoint == message.From);
             if(chat != null)
             {
                 chat.AddMessage(message);
             }
             else
             {
-                chat = new Chat(message.Endpoint, message.Endpoint, new List<Message>());
+                chat = new Chat(message.From, message.Sender, new List<Message>());
                 chat.AddMessage(message);
                 Chats.Add(chat);
             }
         }
-        public void PostMessage(string endpoint_to, Message message)
+        public void PostMessage(Message message)
         {
-            HttpWebRequest httpRequest = (HttpWebRequest)HttpWebRequest.Create(endpoint_to + "/api/message");
-            httpRequest.Method = "POST";
-            httpRequest.ContentType = "Application/json";
-            string messageAsJson = JsonConvert.SerializeObject(message);
+            Chat chat = Chats.Find(x => x.Endpoint == message.To);
+            if (chat != null)
+            {
+                chat.AddMessage(message);
+            }
+            else
+            {
+                chat = new Chat(message.To, message.Sender, new List<Message>());
+                chat.AddMessage(message);
+                Chats.Add(chat);
+            }
+            //HttpWebRequest httpRequest = (HttpWebRequest)HttpWebRequest.Create(endpoint_to + "/api/message");
+            //httpRequest.Method = "POST";
+            //httpRequest.ContentType = "Application/json";
+            //string messageAsJson = JsonConvert.SerializeObject(message);
 
-            using (var streamWriter = new StreamWriter(httpRequest.GetRequestStream()))
-            {
-                streamWriter.Write(messageAsJson);
-            }
-            var httpResponse = (HttpWebResponse)httpRequest.GetResponse();
-            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
-            {
-                var result = streamReader.ReadToEnd();
-            }
+            //using (var streamWriter = new StreamWriter(httpRequest.GetRequestStream()))
+            //{
+            //    streamWriter.Write(messageAsJson);
+            //}
+            //var httpResponse = (HttpWebResponse)httpRequest.GetResponse();
+            //using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+            //{
+            //    var result = streamReader.ReadToEnd();
+            //}
 
         }
     }

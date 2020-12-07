@@ -10,17 +10,29 @@ namespace WebAPI
 {
     public partial class ChatView : System.Web.UI.Page
     {
-        protected void BtnSend_Click(object sender, EventArgs e)
+        protected void BtnSend_Click(object sender_objekt, EventArgs e)
         {
-            string endpoint = HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority);
-            Message message = new Message(endpoint, TxtMessage.Text, DateTime.Now);
-            Global.MainController.PostMessage(txtEndpointTo.Text, message);
+            string from = HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority);
+            string to = txtEndpointTo.Text;
+            string senderName = txtSenderName.Text;
+            string text = TxtMessage.Text;
+            DateTime dateTime = DateTime.Now;
+            Message message = new Message(from,to,senderName,text,dateTime);
+            Global.MainController.PostMessage(message);
             //Response.Redirect(Request.RawUrl);
         }
         public void loadChat()
         {
-            GWChat.DataSource = Global.MainController.Chats;
-            GWChat.DataBind();
+            foreach (Chat chat in Global.MainController.Chats)
+            {
+                if(chat.Messages != null)
+                {
+                    GridView gridView = new GridView();
+                    Pnl.Controls.Add(gridView);
+                    gridView.DataSource = chat.Messages;
+                    gridView.DataBind();
+                }
+            }
         }
 
         protected void ChatTimer_Tick(object sender, EventArgs e)
