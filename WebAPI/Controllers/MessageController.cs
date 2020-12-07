@@ -10,41 +10,25 @@ namespace WebAPI.Controllers
 {
     public class MessageController : ApiController
     {
-        // GET: api/Message/{id:chat_id}
-        [HttpGet]
-        [Route("api/Message/{chatID:long}")]
-        public List<Message> Get([FromUri]long chatID)
-        {
-            Chat chat = Global.MainController.Chats.Find(x => x.ChatID == chatID);
-            if(chat != null)
-            {
-                return chat.Messages;
-            }
-            return null;
-        }
-
-        // POST: api/Message/chatID
+        // POST: api/Message
         [HttpPost]
-        [Route("api/Message/{chatID:long}")]
-        public HttpResponseMessage Post([FromUri] long chatID,[FromBody]Message msg)
+        [Route("api/Message")]
+        public HttpResponseMessage Post([FromBody]Message msg)
         {
-            if( msg != null)
+            if (msg != null)
             {
-                Global.MainController.AddMessage(chatID, msg);
+                Global.MainController.AddMessage(msg);
                 return new HttpResponseMessage(HttpStatusCode.OK);
             }
             return new HttpResponseMessage(HttpStatusCode.InternalServerError);
         }
 
-        //// PUT: api/Message/5
-        //public void Put(int id, [FromBody]Message msg)
-        //{
-        //}
-
-        //// DELETE: api/Message/5
-        //public HttpResponseMessage Delete(int id)
-        //{
-        //    return new HttpResponseMessage(HttpStatusCode.OK);
-        //}
+        // POST: api/Message
+        [HttpGet]
+        [Route("api/Message")]
+        public Message Get()
+        {
+            return new Message("endpoint", "messagetext", DateTime.Now);
+        }
     }
 }

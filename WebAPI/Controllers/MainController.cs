@@ -21,60 +21,42 @@ namespace WebAPI.Controllers
         }
         public void LoadChats()
         {
-            Chat chat1 = new Chat(1, "Fussbal", new List<Message>());
-            AddChat(chat1);
-            Chat chat2 = new Chat(2, "Handball", new List<Message>());
-            AddChat(chat2);
-            Chat chat3 = new Chat(3, "Tennis", new List<Message>());
-            AddChat(chat3);
         }
         public void AddChat(Chat chat)
         {
             Chats.Add(chat);
         }
-        public void AddMessage(long ChatID, Message message)
+        public void AddMessage(Message message)
         {
-            Chat chat = Chats.Find(x => x.ChatID == ChatID);
+            Chat chat = Chats.Find(x => x.Endpoint == message.Endpoint);
             if(chat != null)
             {
                 chat.AddMessage(message);
             }
-        }
-        public Chat GetChat(long ChatID)
-        {
-            string endpoint = HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority);
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(endpoint + "/api/chat/" + ChatID.ToString());
-            request.Method = "GET";
-            request.Accept = "application/json";
-            //request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
-
-            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
-            using (Stream stream = response.GetResponseStream())
-            using (StreamReader reader = new StreamReader(stream))
+            else
             {
-                string content =  reader.ReadToEnd();
-                Chat chat = JsonConvert.DeserializeObject<Chat>(content);
-                return chat;
+                chat = new Chat(message.Endpoint, message.Endpoint, new List<Message>());
+                chat.AddMessage(message);
+                Chats.Add(chat);
             }
         }
-        public async void PostMessage(long ChatID, Message message)
+        public void PostMessage(string endpoint_to, Message message)
         {
-            string endpoint = HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority);
-            HttpWebRequest request = (HttpWebRequest) HttpWebRequest.Create(endpoint+"/api/message/"+ChatID.ToString());
-            request.Method = "POST";
-            request.ContentType = "Application/Json";
-            string messageAsString = JsonConvert.SerializeObject(message);
-            var response  = request.GetResponse();
+            HttpWebRequest httpRequest = (HttpWebRequest)HttpWebRequest.Create(endpoint_to + "/api/message");
+            httpRequest.Method = "POST";
+            httpRequest.ContentType = "Application/json";
+            string messageAsJson = JsonConvert.SerializeObject(message);
 
-            //while (!task.IsCompleted)
-            //{
-            //    Thread.Sleep(5);
-            //}
-            //HttpResponseMessage response = task.Result;
-            //if (response.IsSuccessStatusCode)
-            //{
-            //    //Response.Redirect(Request.RawUrl, true);
-            //}
+            using (var streamWriter = new StreamWriter(httpRequest.GetRequestStream()))
+            {
+                streamWriter.Write(messageAsJson);
+            }
+            var httpResponse = (HttpWebResponse)httpRequest.GetResponse();
+            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+            {
+                var result = streamReader.ReadToEnd();
+            }
+
         }
     }
 }

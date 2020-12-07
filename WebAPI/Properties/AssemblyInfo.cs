@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("WebAPI")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Orgname")]
+[assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("WebAPI")]
-[assembly: AssemblyCopyright("Copyright © Orgname 2020")]
+[assembly: AssemblyCopyright("Copyright ©  2020")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // Die folgende GUID bestimmt die ID der "typelib", wenn dieses Projekt für COM verfügbar gemacht wird.
-[assembly: Guid("21b2fa4c-511b-49d0-968b-a115b0838046")]
+[assembly: Guid("93aeeb72-bd00-4b15-b4bf-d434e1701ef7")]
 
 // Versionsinformationen für eine Assembly bestehen aus den folgenden vier Werten:
 //

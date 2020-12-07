@@ -7,7 +7,7 @@
 // </automatisch generiert>
 //------------------------------------------------------------------------------
 
-namespace WebAPI.Views {
+namespace WebAPI {
     
     
     public partial class ChatView {
@@ -22,6 +22,24 @@ namespace WebAPI.Views {
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
         
         /// <summary>
+        /// ChatScriptManager-Steuerelement
+        /// </summary>
+        /// <remarks>
+        /// Automatisch generiertes Feld
+        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
+        /// </remarks>
+        protected global::System.Web.UI.ScriptManager ChatScriptManager;
+        
+        /// <summary>
+        /// ChatTimer-Steuerelement
+        /// </summary>
+        /// <remarks>
+        /// Automatisch generiertes Feld
+        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
+        /// </remarks>
+        protected global::System.Web.UI.Timer ChatTimer;
+        
+        /// <summary>
         /// lblChatRoom-Steuerelement
         /// </summary>
         /// <remarks>
@@ -31,6 +49,15 @@ namespace WebAPI.Views {
         protected global::System.Web.UI.WebControls.Label lblChatRoom;
         
         /// <summary>
+        /// ChatUpdatePanel-Steuerelement
+        /// </summary>
+        /// <remarks>
+        /// Automatisch generiertes Feld
+        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel ChatUpdatePanel;
+        
+        /// <summary>
         /// GWChat-Steuerelement
         /// </summary>
         /// <remarks>
@@ -38,6 +65,15 @@ namespace WebAPI.Views {
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView GWChat;
+        
+        /// <summary>
+        /// txtEndpointTo-Steuerelement
+        /// </summary>
+        /// <remarks>
+        /// Automatisch generiertes Feld
+        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtEndpointTo;
         
         /// <summary>
         /// TxtMessage-Steuerelement
@@ -56,14 +92,5 @@ namespace WebAPI.Views {
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button BtnSend;
-        
-        /// <summary>
-        /// btnLoadChat-Steuerelement
-        /// </summary>
-        /// <remarks>
-        /// Automatisch generiertes Feld
-        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnLoadChat;
     }
 }
