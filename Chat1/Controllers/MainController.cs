@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using WebAPI.Models;
+using Chat1.Models;
 using System.Net.Http;
 using System.Threading;
 using Newtonsoft.Json;
 using System.Net;
 using System.IO;
 
-namespace WebAPI.Controllers
+namespace Chat1.Controllers
 {
     public class MainController
     {
@@ -29,7 +29,7 @@ namespace WebAPI.Controllers
         public void AddMessage(Message message)
         {
             Chat chat = Chats.Find(x => x.Endpoint == message.From);
-            if(chat != null)
+            if (chat != null)
             {
                 chat.AddMessage(message);
             }
@@ -53,7 +53,7 @@ namespace WebAPI.Controllers
                 chat.AddMessage(message);
                 Chats.Add(chat);
             }
-            HttpWebRequest httpRequest = (HttpWebRequest)HttpWebRequest.Create(message.To+ "/api/message");
+            HttpWebRequest httpRequest = (HttpWebRequest)HttpWebRequest.Create(message.To + "/api/message");
             httpRequest.Method = "POST";
             httpRequest.ContentType = "Application/json";
             string messageAsJson = JsonConvert.SerializeObject(message);
